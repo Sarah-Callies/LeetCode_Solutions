@@ -1,0 +1,31 @@
+int reverse(int x) {
+    if(x == 0)
+        return 0;
+    
+    long result = 0;
+    bool isMinus = x > 0 ? false : true;
+    int a[100];
+    if(isMinus)
+        x = x * (-1);
+    
+    int index = 0;
+    while(x > 0){
+        a[index++] = x % 10;
+        x = x / 10;
+    }
+    
+    for(int i = 0; i < index; i++){
+        result += a[i];
+        if(i < index - 1)
+            result *= 10;
+    }
+    if(result > INT_MAX || result < INT_MIN){
+        return 0;
+    }
+
+    if(isMinus){
+        result *= -1;
+    }
+    
+    return result;
+}

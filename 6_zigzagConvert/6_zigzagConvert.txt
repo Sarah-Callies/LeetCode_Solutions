@@ -1,0 +1,25 @@
+char* convert(char* s, int numRows) {
+    if(numRows == 1)
+        return s;
+    int numColumns = strlen(s);
+    char *result = (char *)malloc((numColumns + 1) * sizeof(char));
+
+    int index = 0;
+    for(int row_num = 0; row_num < numRows; row_num++){
+        bool down = true;
+        int i = 0, j = 0;
+        while(j < numColumns){
+            if(i == row_num){
+                result[index++] = s[j];             
+            }
+            i = down ? i + 1 : i - 1;
+            if((i == numRows - 1) || (i == 0)){
+                down = !down;
+            }
+            j++;
+        }
+    }
+    result[index] = '\0';
+
+    return result;
+}

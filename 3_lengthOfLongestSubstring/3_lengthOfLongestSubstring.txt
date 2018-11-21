@@ -1,0 +1,39 @@
+int lengthOfLongestSubstring(char* s) {
+    int length = strlen(s);
+    
+    if(length == 1)
+        return 1;
+    int result = 0;
+    int end_index = 0;
+    
+    for(int i = 0; i < length; i++){
+        char results[length];
+        results[0] = s[i];
+        bool found = false;
+        end_index = i + 1;
+            
+        for(int j = i + 1; j < length; j++){
+            char current_char = s[j];
+            if(found){
+                break;
+            }
+            for(int k = 0; k < j - i; k++){
+                char test_char = results[k];
+                if(current_char != test_char){
+                    results[j - i] = current_char;
+                    end_index = j + 1;
+                }
+                else{
+                    end_index = j;
+                    found = true;
+                    break;
+                }
+            }
+        }
+        if((end_index - i) > result){
+            result = end_index - i;
+        }
+    }
+    
+    return result;
+}

@@ -1,0 +1,49 @@
+char* longestPalindrome(char* s) { 
+    int len = strlen(s);
+    int travel_start = 0, travel_end = len - 1;
+    int start = 0, end =0;
+    int max = 0;
+    
+    for(int i = 0; i < len; i++){
+        int fly_flag = 0;
+        travel_start = i;
+        travel_end = len - 1 - fly_flag;
+        while(travel_start < travel_end){
+            if(s[travel_start] == s[travel_end]){
+                travel_start++;
+                travel_end--;
+            }
+            else if(travel_start != i){
+                fly_flag++;
+                travel_start = i;
+                travel_end = len - 1 - fly_flag;
+            }
+            else{
+                travel_end--;
+            }
+        }
+       if(travel_start == travel_end){
+            if((travel_start - i) * 2 + 1 >=  max){
+                max = (travel_start - i) * 2 + 1;
+                start = i;
+                end = i + max - 1;
+            }
+        }
+        else{
+            if((travel_start - i) * 2 >= max){
+                max = (travel_start - i) * 2;
+                start = i;
+                end = i + max - 1;             
+            }
+        }
+    }
+    char *result = (char*)malloc((max+1)*sizeof(char));
+    int i = start, j = 0;
+    while(i < end + 1){
+        result[j++] = s[i++];
+    }
+    result[j] = '\0';
+
+    return result;
+
+}

@@ -1,0 +1,32 @@
+bool isPalindrome(int x) {
+    if(x < 0)
+        return false;
+    if(x < 10)
+        return true;
+    
+    int *order = (int *)malloc(32 * sizeof(int));
+    int *start = order;
+    
+    while(1){
+        *order = (int) x % 10;
+        x = x / 10;
+        if(x > 0){
+            order += 1;
+        }
+        else{
+            break;
+        }
+    }
+        
+    while(start <= order){
+        if(*start == *order){
+            start += 1;
+            order -= 1;            
+        }
+        else{
+            return false;
+        }
+    }
+    return true;
+
+}

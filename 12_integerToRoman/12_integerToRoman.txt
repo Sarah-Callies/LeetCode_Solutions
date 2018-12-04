@@ -1,0 +1,47 @@
+char* intToRoman(int num) {
+    char *result = (char *)malloc(100 * sizeof(char));
+    int index = 0;
+    
+    char refer_base[10][5] = {{"\0"}, {"I\0"}, {"II\0"}, {"III\0"}, {"IV\0"}, {"V\0"}, {"VI\0"}, {"VII\0"}, {"VIII\0"}, {"IX\0"}};
+    char refer_ten[10][5] = {{"\0"}, {"X\0"}, {"XX\0"}, {"XXX\0"}, {"XL\0"}, {"L\0"}, {"LX\0"}, {"LXX\0"}, {"LXXX\0"}, {"XC\0"}};
+    char refer_hun[10][5] = {{"\0"}, {"C\0"}, {"CC\0"}, {"CCC\0"}, {"CD\0"}, {"D\0"}, {"DC\0"}, {"DCC\0"}, {"DCCC\0"}, {"CM\0"}};
+    char refer_tho[4][5] = {{"\0"}, {"M\0"}, {"MM\0"}, {"MMM\0"}};
+    
+    int thousand = 0;
+    int hundred = 0;
+    int ten = 0;
+    
+    if(num / 1000 > 0){
+        thousand = num / 1000;
+        num = num % 1000;
+        for(int i = 0; i < strlen(refer_tho[thousand]); i++){
+            char cur = refer_tho[thousand][i];
+            result[index++] = cur;
+        }
+    }
+    if(num / 100 > 0){
+        hundred = num / 100;
+        num = num % 100;
+        for(int i = 0; i < strlen(refer_hun[hundred]); i++){
+            char cur = refer_hun[hundred][i];
+            result[index++] = cur;
+        }
+    }
+    if(num / 10 > 0){
+        ten = num / 10;
+        num = num % 10;
+        for(int i = 0; i < strlen(refer_ten[ten]); i++){
+            char cur = refer_ten[ten][i];
+            result[index++] = cur;
+        }
+    }
+    if(num > 0){
+        for(int i = 0; i < strlen(refer_base[num]); i++){
+            char cur = refer_base[num][i];
+            result[index++] = cur;
+        }
+    }
+    result[index] = '\0';
+
+    return result;
+}

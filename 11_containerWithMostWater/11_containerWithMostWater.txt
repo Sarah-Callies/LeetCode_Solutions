@@ -1,0 +1,17 @@
+int maxArea(int* height, int heightSize) {
+    int max_area = 0;
+    for(int i = 0; i < heightSize; i++){
+        for(int j = heightSize - 1; j >= 0 && j > i; j--){
+            int min_height = 0;
+            if(height[i] - height[j] > 0){
+                min_height = height[j];
+            }
+            else{
+                min_height = height[i];
+            }
+            if((j - i) * min_height > max_area)
+                max_area = (j - i) * min_height;
+        }
+    }
+    return max_area;
+}

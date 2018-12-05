@@ -1,10 +1,4 @@
 int romanToInt(char* s) {
-
-    char refer_base[10][5] = {{"\0"}, {"I\0"}, {"II\0"}, {"III\0"}, {"IV\0"}, {"V\0"}, {"VI\0"}, {"VII\0"}, {"VIII\0"}, {"IX\0"}};
-    char refer_ten[10][5] = {{"\0"}, {"X\0"}, {"XX\0"}, {"XXX\0"}, {"XL\0"}, {"L\0"}, {"LX\0"}, {"LXX\0"}, {"LXXX\0"}, {"XC\0"}};
-    char refer_hun[10][5] = {{"\0"}, {"C\0"}, {"CC\0"}, {"CCC\0"}, {"CD\0"}, {"D\0"}, {"DC\0"}, {"DCC\0"}, {"DCCC\0"}, {"CM\0"}};
-    char refer_tho[4][5] = {{"\0"}, {"M\0"}, {"MM\0"}, {"MMM\0"}};
-    
     int result = 0;
     if(strlen(s) == 0)
         return result;

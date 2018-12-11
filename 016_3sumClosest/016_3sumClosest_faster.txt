@@ -32,15 +32,15 @@ void quickSort(int *nums, int left, int right){
 int threeSumClosest(int* nums, int numsSize, int target) {
     int begin, end, i, sum, Min = INT_MAX;
     quickSort(nums, 0, numsSize-1);
-    for(i=0;i<numsSize-2;i++){
-        if(i>0 && nums[i]==nums[i-1])
+    for(i = 0;i < numsSize-2; i++){
+        if(i > 0 && nums[i] == nums[i-1])
             continue;
         begin = i + 1;
         end = numsSize - 1;
-        while(begin<end){
-            sum=nums[i]+nums[begin]+nums[end];
-            if(abs(sum-target) < abs(Min))
-                Min=sum-target;
+        while(begin < end){
+            sum = nums[i] + nums[begin] + nums[end];
+            if(abs(sum - target) < abs(Min))
+                Min = sum - target;
             if(sum == target)
                 return target;
             else if(sum > target)
@@ -49,5 +49,5 @@ int threeSumClosest(int* nums, int numsSize, int target) {
                 begin++;
         }
     }
-    return Min+target;
+    return Min + target;
 }

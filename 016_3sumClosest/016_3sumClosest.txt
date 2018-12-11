@@ -1,0 +1,35 @@
+int threeSumClosest(int* nums, int numsSize, int target) {
+    if(numsSize < 3)
+        return NULL;
+    int minus_result = INT_MIN;
+    int plus_result = INT_MIN;
+    for(int i = 0; i < numsSize - 2; i++){
+        for(int j = i + 1; j < numsSize - 1; j++){
+            for(int k = j + 1; k < numsSize; k++){
+                int sum = nums[i] + nums[j] + nums[k] - target;
+                if(sum < 0){
+                    if(minus_result == INT_MIN){
+                        minus_result = sum;
+                    }
+                    else if(sum > minus_result){
+                        minus_result = sum;
+                    }
+                }
+                else{
+                    if(plus_result == INT_MIN){
+                        plus_result = sum;
+                    }
+                    else if(sum < plus_result){
+                        plus_result = sum;
+                    }
+                }
+            }   
+        }
+    }
+    if(plus_result + minus_result > 0){
+        return target + minus_result;
+    }
+    else{
+        return target + plus_result;
+    }
+}

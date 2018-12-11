@@ -1,0 +1,91 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+void quicksort(int * nums, int left, int right){
+    int i, j , pivot;
+    if(left < right){
+        i = left;
+        j = right + 1;
+        pivot = nums[left];
+        do{
+            do{
+                i++;
+            }while(nums[i] < pivot);
+            do{
+                j--;
+            }while(nums[j] > pivot);
+            if(i < j){
+                int temp = 0;
+                temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }while(i < j);
+        int temp = nums[left];
+        nums[left] = nums[j];
+        nums[j] = temp;
+        quicksort(nums, left, j - 1);
+        quicksort(nums, j + 1, right);
+    }
+}
+
+int** threeSum(int* nums, int numsSize, int* returnSize) {
+    if(numsSize < 3)
+        return NULL;
+    int result_count = numsSize * (numsSize - 1) * (numsSize - 2) / 6;
+    int **result = (int **)malloc(result_count * sizeof(int *));
+    quicksort(nums, 0, numsSize - 1);
+    int final_count = 0;
+    for(int i = 0; nums[i] <= 0; i++){
+        int end = numsSize - 1;
+        int mid = i + 1;
+        while(mid < end && end <= numsSize - 1 && mid > i){
+            int sum = nums[i] + nums[mid] + nums[end];
+            if(sum > 0)
+                end--;
+            else if (sum == 0){
+                int *temp = (int *)malloc(3 * sizeof(int));
+                temp[0] = nums[i];
+                temp[1] = nums[mid];
+                temp[2] = nums[end];
+                result[final_count++] = temp;
+                mid++;
+                end--;
+            }
+            else
+                mid++;
+        }
+    }
+    
+    int i = 0, j = 0;
+    while(i < final_count - 1){
+        j = i + 1;
+        int *temp1 = result[i];
+        while(j < final_count){
+            int *temp2 = result[j];
+            int count = 0;
+            while(temp1[count] == temp2[count]){
+                if(count != 3)
+                    count++;
+                else
+                    break;
+            }
+            if(count == 3){
+                if(j < final_count - 1){
+                    result[j] = result[final_count - 1];
+                }
+                final_count--;
+            }     
+            else{
+                j++;
+            }
+        }
+        i++;
+    }
+    *returnSize = final_count;
+
+    return result;
+    
+    
+}

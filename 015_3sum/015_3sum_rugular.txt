@@ -1,0 +1,86 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int** threeSum(int* nums, int numsSize, int* returnSize) {
+    if(numsSize < 3)
+        return NULL;
+    int max_result_count = numsSize * (numsSize - 1) * (numsSize - 2) / 6;
+    int **result = (int **)malloc(max_result_count * sizeof(int *));
+    int index = 0;
+    for(int i = 0; i < numsSize - 2; i++){
+        int nums_i = nums[i];
+        for(int j = i + 1; j < numsSize - 1; j++){
+            int nums_j = nums[j];
+            for(int k = j + 1; k < numsSize; k++){
+                int nums_k = nums[k];
+                if(nums_i + nums_j + nums_k == 0){
+                    int *temp = (int *)malloc(3 * sizeof(int));                        
+                    if(nums_i <= nums_j && nums_i <= nums_k){
+                        temp[0] = nums_i;
+                        if(nums_j <= nums_k){
+                            temp[1] = nums_j;
+                            temp[2] = nums_k;
+                        }
+                        else{
+                            temp[1] = nums_k;
+                            temp[2] = nums_j;                            
+                        }
+                    }
+                    else if(nums_j <= nums_i && nums_j <= nums_k){
+                        temp[0] = nums_j;
+                        if(nums_i <= nums_k){
+                            temp[1] = nums_i;
+                            temp[2] = nums_k;
+                        }
+                        else{
+                            temp[1] = nums_k;
+                            temp[2] = nums_i;
+                        }
+                    }
+                    else{
+                        temp[0] = nums_k;
+                        if(nums_i <= nums_j){
+                            temp[1] = nums_i;
+                            temp[2] = nums_j;
+                        }
+                        else{
+                            temp[1] = nums_j;
+                            temp[2] = nums_i;
+                        }
+                    }
+                    result[index++] = temp;
+                }
+            }
+        }
+    }
+   
+    int i = 0, j = 0;
+    while(i < index - 1){
+        j = i + 1;
+        int *temp1 = result[i];
+        while(j < index){
+            int *temp2 = result[j];
+            int count = 0;
+            while(temp1[count] == temp2[count]){
+                if(count != 3)
+                    count++;
+                else
+                    break;
+            }
+            if(count == 3){
+                if(j < index - 1){
+                    result[j] = result[index - 1];
+                }
+                index--;
+            }     
+            else{
+                j++;
+            }
+        }
+        i++;
+    }
+    *returnSize = index;
+
+    return result;
+}

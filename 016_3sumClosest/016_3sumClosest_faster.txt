@@ -1,0 +1,53 @@
+int abs(int tar){
+    return tar > 0 ? tar : -tar;
+}
+
+void quickSort(int *nums, int left, int right){
+    int pivot, i, j;
+    if(left < right){
+        pivot = nums[left];
+        i = left;
+        j = right + 1;
+        do{
+            do{
+                i++;                
+            }while(nums[i] < pivot);
+            do{
+                j--;
+            }while(nums[j] > pivot);
+            if(i < j){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }while(i < j);
+        int temp = nums[left];
+        nums[left] = nums[j];
+        nums[j] = temp;
+        quickSort(nums, left, j - 1);
+        quickSort(nums, j + 1, right);
+    }
+}
+
+int threeSumClosest(int* nums, int numsSize, int target) {
+    int begin, end, i, sum, Min = INT_MAX;
+    quickSort(nums, 0, numsSize-1);
+    for(i=0;i<numsSize-2;i++){
+        if(i>0 && nums[i]==nums[i-1])
+            continue;
+        begin = i + 1;
+        end = numsSize - 1;
+        while(begin<end){
+            sum=nums[i]+nums[begin]+nums[end];
+            if(abs(sum-target) < abs(Min))
+                Min=sum-target;
+            if(sum == target)
+                return target;
+            else if(sum > target)
+                end--;
+            else 
+                begin++;
+        }
+    }
+    return Min+target;
+}

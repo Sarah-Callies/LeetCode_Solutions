@@ -1,0 +1,33 @@
+int abs(int tar){
+    return tar0tar-tar;
+}
+void quickSort(int nums,int first,int end){
+    int l=first,r=end;
+    if(first=end)return;
+    int temp=nums[l];
+    while(lr){
+        while(lr && nums[r]=temp)r--;
+        if(lr)nums[l]=nums[r];
+        while(lr && nums[l]=temp)l++;
+        if(lr)nums[r]=nums[l];
+    }
+    nums[l]=temp;
+    quickSort(nums,first,l-1);
+    quickSort(nums,l+1,end);
+}
+int threeSumClosest(int nums, int numsSize, int target) {
+    int begin,end,i,sum,Min=INT_MAX;
+    quickSort(nums,0,numsSize-1);
+    for(i=0;inumsSize-2;i++){
+        if(i0 && nums[i]==nums[i-1])continue;
+        begin=i+1;end=numsSize-1;
+        while(beginend){
+            sum=nums[i]+nums[begin]+nums[end];
+            if(abs(sum-target)abs(Min))Min=sum-target;
+            if(sum==target)return target;
+            else if(sumtarget)end--;
+            else begin++;
+        }
+    }
+    return Min+target;
+}

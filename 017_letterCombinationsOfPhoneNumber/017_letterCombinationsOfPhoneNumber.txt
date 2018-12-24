@@ -1,0 +1,62 @@
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** letterCombinations(char* digits, int* returnSize) {
+    char *base[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    int length = strlen(digits);
+    
+    if(length == 0)
+        return NULL;
+    int max_result_count = 1;
+    for(int i = 0; i < length; i++){
+        max_result_count *= 4;
+    }
+    char **result = (char *)malloc(max_result_count * sizeof(char *));
+    
+    int real_count = 0;
+    int letters_count = 0;
+    for(int i = 0; i < length; i++){
+        int num = digits[i] - 48;
+        char *letters = base[num];
+        if(num == 7 || num == 9){
+            letters_count = 4;
+        }
+        else{
+            letters_count = 3;
+        }
+        if(real_count == 0){
+            for(int j = 0; j < letters_count; j++){
+                char *new_result = (char *)malloc((length + 1) * sizeof(char));
+                new_result[0] = letters[j];
+                result[real_count++] = new_result; 
+            }
+        }
+        else{
+            int last_result_count = real_count;
+            for(int j = last_result_count; j < last_result_count * letters_count; j++){
+                int origin_index = j % last_result_count;
+                char *origin_result = result[origin_index];
+                char *new_result = (char *)malloc((length + 1) * sizeof(char));
+                for(int k = 0; k < i; k++){
+                    new_result[k] = origin_result[k];
+                }
+                result[real_count++] = new_result; 
+            }
+            
+            for(int j = 0; j < real_count; j++){
+                char *origin_result = result[j];
+                int index = j / last_result_count;
+                origin_result[i] = letters[index];
+            }
+        }
+    }
+    
+    for(int j = 0; j < real_count; j++){
+        char *sub_result = result[j];
+        sub_result[length] = '\0';
+    }
+    
+    *returnSize = real_count;
+    return result;
+}

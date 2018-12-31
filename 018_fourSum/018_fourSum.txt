@@ -1,0 +1,80 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+void quickSort(int *nums, int left, int right){
+    int i, j , pivot;
+    if(left < right){
+        i = left;
+        j = right + 1;
+        pivot = nums[left];
+        do{
+            do{
+                i++;
+            }while(nums[i] < pivot);
+            do{
+                j--;
+            }while(nums[j] > pivot);
+            if(i < j){
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }while(i < j);
+        int temp = nums[left];
+        nums[left] = nums[j];
+        nums[j]= temp;
+        quickSort(nums, left, j - 1);
+        quickSort(nums, j + 1, right);
+        
+    }
+}
+
+int** fourSum(int* nums, int numsSize, int target, int* returnSize) {
+    if(numsSize < 4){
+        *returnSize = 0;
+        return NULL;
+    }
+    
+    quickSort(nums, 0, numsSize - 1);
+    
+    int resultCount = (numsSize) * (numsSize - 1) * (numsSize - 2) * (numsSize - 3) / 24;
+    int **result = (int **)malloc(resultCount * sizeof(int *));
+    
+    int count = 0;
+    int *lastResult = (int *)malloc(4 * sizeof(int));
+    
+    for(int i = 0; i < numsSize - 3; i++){
+        for(int j = i + 1; j < numsSize - 2; j++){
+            for(int k = j + 1; k < numsSize - 1; k++){
+                for(int m = k + 1; m < numsSize; m++){
+                    int sum = nums[i] + nums[j] + nums[k] + nums[m];
+                    if(sum == target){
+                        bool repeat = false;
+                        for(int n = 0; n < count; n++){
+                            lastResult = result[n];
+                            if(lastResult[0] == nums[i] && lastResult[1] == nums[j] && lastResult[2] == nums[k] && lastResult[3] == nums[m])
+                                repeat = true;
+                        }
+                        if(!repeat){
+                            int *subResult = (int *)malloc(4 * sizeof(int));
+                            subResult[0] = nums[i];
+                            subResult[1] = nums[j];
+                            subResult[2] = nums[k];
+                            subResult[3] = nums[m];
+                            result[count++] = subResult;                              
+                        }
+
+                    }   
+                    else if(sum > target){
+                        break;
+                    }
+                }
+            }
+        }
+    }
+        
+    *returnSize = count;
+    return result;
+    
+}

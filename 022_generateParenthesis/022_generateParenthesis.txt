@@ -1,0 +1,65 @@
+/**
+ * Return an array of size *returnSize.
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+char** generateParenthesis(int n, int* returnSize) {
+    if(n <= 0){
+        *returnSize = 0;
+        return NULL;
+    }
+    else if(n == 1){
+        *returnSize = 1;
+        char **result = (char **)malloc(sizeof(char*));
+        char *sub = (char *)malloc(3 * sizeof(char));
+        sub[0] = '(';
+        sub[1] = ')';
+        sub[2] = '\0';
+        result[0] = sub;
+        return result;
+    }
+    char **result = (char **)malloc(n * n * n * n * sizeof(char*));
+    char **lastResult = generateParenthesis(n - 1, returnSize);
+    int count = 0;
+    for(int i = 0; i < *returnSize; i++){
+        char *base = lastResult[i];
+        int baseLen = strlen(base);
+        for(int j = 0; j < baseLen + 1; j++){
+            char *sub = (char *)malloc((baseLen + 3) * sizeof(char));
+            int k = 0;
+            while(k < baseLen + 2){
+                if(k < j){
+                    sub[k] = base[k];
+                }
+                else if(k == j){
+                    sub[k] = '(';
+                    sub[k + 1] = ')';
+                    k++;
+                }
+                else{
+                    sub[k] = base[k - 2];
+                }  
+                k++;
+            }
+            sub[k] = '\0';
+            int start = 0;
+            while(start < count){
+                char *ori = result[start];
+                int index = 0;
+                while(index < baseLen + 2){
+                    if(sub[index] != ori[index])
+                        break;
+                    index++;
+                }
+                if(index == baseLen + 2){
+                    break;          //在result中找到同样的sub 退出循环
+                }
+                start++;
+            }
+            if(start == count){
+                result[count++] = sub;
+            }  
+        }
+    }
+    *returnSize = count;
+    return result;
+}

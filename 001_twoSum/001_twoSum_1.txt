@@ -1,7 +1,6 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-
 int* twoSum(int* nums, int numsSize, int target) {
     int i, max, min;
     max = min = nums[0];
@@ -13,7 +12,7 @@ int* twoSum(int* nums, int numsSize, int target) {
     int *map   = (int*)calloc((max-min+1), sizeof(int));
     int *result = (int*)malloc(sizeof(int)*2);
     
-    for(i = 0; i < numsSize; map[nums[i]-min] = ++i) {
+    for(i = 0; i < numsSize; i++) {
         int lookfornum = target - nums[i];
         if(lookfornum < min || lookfornum > max) continue;
         int dis = lookfornum - min;
@@ -22,6 +21,10 @@ int* twoSum(int* nums, int numsSize, int target) {
             result[1] = map[dis] -1;
             break;
         }
+        else{
+            map[nums[i] - min] = i + 1;
+        }
+
     }
     
     return result;

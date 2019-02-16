@@ -1,0 +1,32 @@
+int lengthOfLongestSubstring(char* s) {
+    int length = strlen(s);
+    if(length == 1)
+        return 1;
+    
+    int max = 0;
+    
+    for(int i = 0; i < length - 1; i++){
+        int *map   = (int*)calloc(256, sizeof(int));
+        map[s[i]] = 1;
+        for(int j = i + 1; j < length; j++){
+            char cur = s[j];
+            if(map[cur]){
+                if(j - i > max){
+                    max = j - i;
+                }
+                break;
+            }
+            else{
+                map[cur] = 1;
+            }
+            if(j == length - 1){
+                if(j - i + 1 > max){
+                    max = j - i + 1;
+                }
+            }
+        }
+        free(map);            
+    }
+
+    return max;
+}

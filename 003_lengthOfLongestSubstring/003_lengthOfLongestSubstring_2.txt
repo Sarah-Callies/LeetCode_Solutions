@@ -13,17 +13,11 @@ int lengthOfLongestSubstring(char* s) {
             if(map[cur] - 1 >= last_index){
                 last_index = map[cur];
             }
-            if(i - last_index + 1> max){
-                max = i - last_index + 1;
-            }     
-            map[cur] = i + 1;
         }
-        else{
-            map[cur] = i + 1;
-            if(i - last_index + 1> max){
-                max = i - last_index + 1;
-            }
-        }
+        map[cur] = i + 1;
+        if(i - last_index + 1> max){
+            max = i - last_index + 1;
+        }  
     }
     return max;
 }

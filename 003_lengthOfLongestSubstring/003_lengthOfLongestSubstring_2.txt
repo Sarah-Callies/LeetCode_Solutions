@@ -1,0 +1,29 @@
+int lengthOfLongestSubstring(char* s) {
+    int length = strlen(s);
+    if(length == 1)
+        return 1;
+    int max = 0;
+    int last_index = 0;
+    
+    int *map = (int *)calloc(256, sizeof(int));
+    
+    for(int i = 0; i < length; i++){
+        char cur = s[i];
+        if(map[cur]){
+            if(map[cur] - 1 >= last_index){
+                last_index = map[cur];
+            }
+            if(i - last_index + 1> max){
+                max = i - last_index + 1;
+            }     
+            map[cur] = i + 1;
+        }
+        else{
+            map[cur] = i + 1;
+            if(i - last_index + 1> max){
+                max = i - last_index + 1;
+            }
+        }
+    }
+    return max;
+}

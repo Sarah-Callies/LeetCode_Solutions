@@ -1,7 +1,5 @@
 int lengthOfLongestSubstring(char* s) {
     int length = strlen(s);
-    if(length == 1)
-        return 1;
     int max = 0;
     int last_index = 0;
     

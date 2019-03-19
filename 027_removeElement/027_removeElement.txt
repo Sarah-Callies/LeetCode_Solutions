@@ -1,0 +1,11 @@
+iint removeElement(int* nums, int numsSize, int val) {
+    int count = 0;
+    int i = 0;
+    while(i < numsSize){
+        if(nums[i] != val){
+            nums[count++] = nums[i];
+        }
+        i++;
+    }
+    return count;
+}

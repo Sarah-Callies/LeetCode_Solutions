@@ -1,0 +1,33 @@
+int strStr(char* haystack, char* needle) {
+    int hlen = strlen(haystack);
+    int nlen = strlen(needle);
+    if(hlen == 0 && nlen == 0)
+        return 0;
+    else if(nlen == 0)
+        return 0;
+    else if(nlen > hlen)
+        return -1;
+    int index = -1;
+    int i = 0;
+    int j = 0;
+    while(haystack[i] != '\0' && needle[j] != '\0'){
+        if(haystack[i] == needle[j]){
+            if(index == -1)
+                index = i;
+            i++;
+            j++;
+        }
+        else{
+            if(index != -1)
+                i = index + 1;
+            else
+                i++;
+            j = 0;
+            index = -1;
+        }
+    }
+    if(needle[j] == '\0')
+        return index;
+    else
+        return -1;
+}
